@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Final Project — Responsive Demo</title>
+  <meta name="description" content="Ví dụ Final Project: responsive site với 4 media queries, ảnh có alt, và nội dung có thể chỉnh sửa.">
+
+  <style>
+    /* ================= Base (mobile-first) ================= */
+    :root{
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --muted: #546276;
+      --accent: #1f6feb;
+      --radius: 10px;
+    }
+
+    *{box-sizing: border-box}
+    body{
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: #102a43;
+      line-height: 1.45;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .site {
+      max-width: 1100px;
+      margin: 18px auto;
+      padding: 18px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    header img.logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 6px 16px rgba(12,18,32,0.06);
+    }
+    header h1 { font-size: 1.2rem; margin: 0; }
+    header p.lead { margin: 4px 0 0; color: var(--muted); font-size: .95rem; }
+
+    /* Hero */
+    .hero {
+      display: block;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 12px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.05);
+      margin-bottom: 18px;
+    }
+    .hero .hero-grid {
+      display: block;
+    }
+    .hero img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+    .hero .hero-text {
+      margin-top: 10px;
+    }
+    .hero h2 { margin: 6px 0; font-size: 1.1rem; }
+    .hero p { margin: 0; color: var(--muted); }
+
+    /* Gallery / cards */
+    .gallery {
+      display: block; /* stack on mobile */
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 8px 22px rgba(2,6,23,0.04);
+      overflow: hidden;
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+    .card h3 { margin: 6px 0; font-size: 1rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+
+    footer {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    /* ================= Media Query 1: small tablets (min-width: 480px) ================= */
+    @media (min-width: 480px) {
+      .hero {
+        padding: 16px;
+      }
+      .hero .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        align-items: center;
+      }
+      .hero img { height: 220px; object-fit: cover; }
+    }
+
+    /* ================= Media Query 2: tablets / landscape phones (min-width: 768px) ================= */
+    @media (min-width: 768px) {
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .card img { height: 180px; }
+      .hero img { height: 300px; }
+    }
+
+    /* ================= Media Query 3: small desktop (min-width: 992px) ================= */
+    @media (min-width: 992px) {
+      .site { padding: 24px; }
+      .gallery {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .card img { height: 200px; }
+      .hero .hero-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+      .hero img { height: 360px; }
+    }
+
+    /* ================= Media Query 4: large desktop (min-width: 1200px) ================= */
+    @media (min-width: 1200px) {
+      .site { max-width: 1300px; }
+      .hero img { height: 420px; }
+      .card img { height: 240px; }
+    }
+
+    /* small utilities */
+    .muted { color: var(--muted); }
+    .btn { display:inline-block; padding:8px 12px; border-radius:8px; background:var(--accent); color:white; text-decoration:none; font-weight:600; }
+  </style>
+</head>
+
+<body>
+  <div class="site">
+    <!-- Header -->
+    <header>
+      <img class="logo" src="https://picsum.photos/id/1005/200/200" alt="Logo mẫu: phong cảnh" />
+      <div>
+        <h1>My Final Project — Responsive Website</h1>
+        <p class="lead">Đã cập nhật ảnh và nội dung mẫu. Thay nội dung/ảnh theo dự án của bạn.</p>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Phần giới thiệu">
+      <div class="hero-grid">
+        <div class="hero-media">
+          <img src="https://picsum.photos/id/1018/1200/800" alt="Bãi biển rộng với bầu trời xanh" />
+        </div>
+        <div class="hero-text">
+          <h2>Tiêu đề chính của dự án</h2>
+          <p>Đây là đoạn văn giới thiệu. Bạn có thể chỉnh sửa đoạn văn này để mô tả mục tiêu dự án, nội dung chính hoặc gọi hành động.</p>
+          <p class="muted">Mẹo: kiểm tra bản di động trước, sau đó thêm bộ quy tắc responsive theo từng breakpoint.</p>
+          <p style="margin-top:12px"><a class="btn" href="#gallery">Xem bộ sưu tập</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery of cards -->
+    <main id="gallery" aria-label="Bộ sưu tập ảnh">
+      <div class="gallery">
+        <article class="card">
+          <img src="https://picsum.photos/id/1020/1200/800" alt="Cánh rừng sương mù buổi sáng" />
+          <h3>Khung cảnh rừng tự nhiên</h3>
+          <p>Đoạn mô tả ngắn cho hình ảnh. Thay thế bằng nội dung liên quan đến dự án của bạn.</p>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/id/1024/1200/800" alt="Chú chó đang chạy trên bãi cỏ" />
+          <h3>Khoảnh khắc vui vẻ</h3>
+          <p>Nội dung mô tả khác. Thay đổi văn bản để phản ánh chủ đề trang web bạn đang làm.</p>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/id/1035/1200/800" alt="Cánh đồng hoa vàng rực rỡ" />
+          <h3>Vẻ đẹp tự nhiên</h3>
+          <p>Đoạn văn mẫu thứ ba — có thể mô tả dịch vụ, sản phẩm hoặc dự án.</p>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/id/1041/1200/800" alt="Thành phố hiện đại về đêm" />
+          <h3>Không gian đô thị</h3>
+          <p>Nội dung minh họa: bạn nên thay bằng văn bản thật của mình.</p>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/id/1056/1200/800" alt="Cầu bắc qua sông vào hoàng hôn" />
+          <h3>Cây cầu lúc hoàng hôn</h3>
+          <p>Một đoạn mô tả ngắn khác. Hãy chắc chắn rằng tất cả ảnh đều có alt hợp lệ để vượt qua kiểm tra WAVE/aXe.</p>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/id/1067/1200/800" alt="Con đường mòn xuyên rừng vào mùa thu" />
+          <h3>Hành trình khám phá</h3>
+          <p>Nội dung ví dụ cuối cùng — bạn có thể thêm liên kết, nút gọi hành động ở đây.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <p class="muted">Hướng dẫn kiểm tra:</p>
+      <ol>
+        <li>Thay thế tất cả <strong>src</strong> ảnh bằng ảnh của bạn (hoặc giữ Picsum để test). Luôn có <code>alt</code>.</li>
+        <li>Mở <code>index.html</code> trong trình duyệt → kiểm tra mobile view (DevTools, device toolbar).</li>
+        <li>Chạy <strong>W3C Markup Validation</strong> (https://validator.w3.org/) — sửa mọi lỗi báo ra (thường là unclosed tags, thiếu alt, attributes sai).</li>
+        <li>Chạy <strong>WAVE</strong> (https://wave.webaim.org/) và kiểm tra cảnh báo/ lỗi truy cập (contrast, headings, alt, ARIA).</li>
+        <li>Chạy <strong>aXe</strong> extension trong trình duyệt và sửa các violation nghiêm trọng.</li>
+        <li>Host: dùng GitHub Pages / Netlify / Vercel / CodePen để chia sẻ URL cho peer review.</li>
+      </ol>
+      <p class="muted">Gợi ý breakpoint đã dùng: <code>480px</code>, <code>768px</code>, <code>992px</code>, <code>1200px</code>. Bạn có thể điều chỉnh theo yêu cầu khóa học.</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interactive Photo Gallery — Keyboard & Mouse Accessible</title>
+  <style>
+    :root {
+      --card-bg: #111827;
+      --muted: #6b7280;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 24px;
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    h1 { margin-bottom: 12px; }
+
+    .gallery {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .thumb {
+      width: 140px;
+      height: 96px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+      box-shadow: 0 2px 6px rgba(2,6,23,0.06);
+      display: inline-block;
+    }
+
+    /* hover and focus look similar so keyboard users get same affordance */
+    .thumb:hover,
+    .thumb:focus {
+      transform: translateY(-4px);
+      border-color: #2563eb; /* blue */
+      outline: none;
+      box-shadow: 0 8px 22px rgba(37,99,235,0.12);
+    }
+
+    /* clearly visible focus ring for keyboard users */
+    .thumb:focus-visible {
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.16);
+    }
+
+    #image {
+      width: 100%;
+      max-width: 760px;
+      height: 380px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      padding: 12px;
+      text-align: center;
+      background-color: #111827; /* fallback background */
+      margin-top: 8px;
+    }
+
+    #image .caption {
+      background: rgba(0,0,0,0.35);
+      padding: 10px 14px;
+      border-radius: 8px;
+      max-width: 90%;
+    }
+
+    .instructions {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Photo Gallery (6 images) — keyboard & mouse friendly</h1>
+
+  <p class="instructions">Hover, focus (Tab), and use keyboard to test. Open DevTools console to see logging.</p>
+
+  <div class="gallery" id="thumbRow">
+    <!-- 6 thumbnails: keep onmouseover/onmouseleave pattern and add onfocus/onblur -->
+    <!-- Each image has alt text -->
+    <img class="thumb"
+         src="https://picsum.photos/id/1015/800/600"
+         alt="Rocky mountain lake at sunrise"
+         onmouseover="upDate(this)"
+         onmouseleave="undo()"
+         onfocus="upDate(this)"
+         onblur="undo()"
+    >
+
+    <img class="thumb"
+         src="https://picsum.photos/id/1025/800/600"
+         alt="Golden retriever looking at camera"
+         onmouseover="upDate(this)"
+         onmouseleave="undo()"
+         onfocus="upDate(this)"
+         onblur="undo()"
+    >
+
+    <img class="thumb"
+         src="https://picsum.photos/id/1039/800/600"
+         alt="Ocean with turquoise water and waves"
+         onmouseover="upDate(this)"
+         onmouseleave="undo()"
+         onfocus="upDate(this)"
+         onblur="undo()"
+    >
+
+    <img class="thumb"
+         src="https://picsum.photos/id/1043/800/600"
+         alt="Field of wildflowers under blue sky"
+         onmouseover="upDate(this)"
+         onmouseleave="undo()"
+         onfocus="upDate(this)"
+         onblur="undo()"
+    >
+
+    <img class="thumb"
+         src="https://picsum.photos/id/1052/800/600"
+         alt="City skyline at dusk with lights"
+         onmouseover="upDate(this)"
+         onmouseleave="undo()"
+         onfocus="upDate(this)"
+         onblur="undo()"
+    >
+
+    <img class="thumb"
+         src="https://picsum.photos/id/1069/800/600"
+         alt="Dense forest path covered in autumn leaves"
+         onmouseover="upDate(this)"
+         onmouseleave="undo()"
+         onfocus="upDate(this)"
+         onblur="undo()"
+    >
+  </div>
+
+  <!-- Preview element that will be updated -->
+  <div id="image" aria-live="polite" role="region">
+    <div class="caption">Hover over an image below to display here.</div>
+  </div>
+
+  <script>
+    // Constants
+    const IMAGE_DIV_ID = 'image';
+    const DEFAULT_TEXT = "Hover over an image below to display here.";
+
+    /**
+     * upDate(previewPic)
+     * Called from onmouseover and onfocus (previewPic is the <img> element)
+     */
+    function upDate(previewPic) {
+      console.log('upDate triggered'); // confirm event firing
+      if (!previewPic) {
+        console.warn('upDate: previewPic is falsy');
+        return;
+      }
+
+      console.log('thumbnail element:', previewPic);
+      console.log('thumbnail.src =', previewPic.src);
+      console.log('thumbnail.alt =', previewPic.alt);
+
+      const imageDiv = document.getElementById(IMAGE_DIV_ID);
+      if (!imageDiv) {
+        console.error(`Element with id="${IMAGE_DIV_ID}" not found.`);
+        return;
+      }
+
+      const caption = imageDiv.querySelector('.caption');
+      // Update visible text
+      if (caption) {
+        caption.textContent = previewPic.alt;
+      } else {
+        imageDiv.textContent = previewPic.alt;
+      }
+
+      // Update background
+      imageDiv.style.backgroundImage = `url('${previewPic.src}')`;
+    }
+
+    /**
+     * undo()
+     * Called from onmouseleave and onblur
+     */
+    function undo() {
+      console.log('undo triggered');
+      const imageDiv = document.getElementById(IMAGE_DIV_ID);
+      if (!imageDiv) {
+        console.error(`Element with id="${IMAGE_DIV_ID}" not found.`);
+        return;
+      }
+
+      // Remove background-image (empty string => no inline background-image)
+      imageDiv.style.backgroundImage = '';
+
+      // Reset text
+      const caption = imageDiv.querySelector('.caption');
+      if (caption) {
+        caption.textContent = DEFAULT_TEXT;
+      } else {
+        imageDiv.textContent = DEFAULT_TEXT;
+      }
+    }
+
+    /**
+     * addTabfocusAttributes()
+     * Called on load: add tabindex to thumbnails so they are keyboard-focusable,
+     * add a tabfocus attribute (as requested), and log progress.
+     */
+    function addTabfocusAttributes() {
+      console.log('addTabfocusAttributes() running on load');
+      // Select all thumbnails (by class)
+      const thumbs = document.querySelectorAll('.thumb');
+      console.log('found', thumbs.length, 'thumbnails');
+
+      for (let i = 0; i < thumbs.length; i++) {
+        const img = thumbs[i];
+        // add tabindex so they are reachable with Tab key
+        // only add if there isn't one already
+        if (!img.hasAttribute('tabindex')) {
+          img.setAttribute('tabindex', '0');
+        }
+        // add a custom attribute called tabfocus (as requested)
+        img.setAttribute('tabfocus', 'true');
+
+        // Optional: add aria-describedby or aria-label if desired for screen readers
+        // For this example we rely on the alt text and the live region for the preview
+      }
+      console.log('tabindex and tabfocus attributes added to thumbnails.');
+    }
+
+    // Add load listener (decided function name: addTabfocusAttributes)
+    // We use DOMContentLoaded so images can be selected reliably
+    window.addEventListener('load', function () {
+      console.log('window load event fired — initializing gallery');
+      addTabfocusAttributes();
+    });
+
+    // Optional: If you also want to initialize via body onload, you could:
+    // <body onload="addTabfocusAttributes()"> ... but here we use addEventListener above.
+
+    // Quick enhancement: keyboard Enter/Space to activate (open same as hover)
+    // This makes Enter/Space behave like click/preview (nice for keyboard users).
+    document.addEventListener('keydown', function (e) {
+      // act only when a thumbnail has focus
+      const active = document.activeElement;
+      if (!active || !active.classList || !active.classList.contains('thumb')) return;
+
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        // call upDate with the focused element
+        upDate(active);
+      }
+      // Escape to undo
+      if (e.key === 'Escape') {
+        undo();
+      }
+    });
+  </script>
+</body>
+</html>

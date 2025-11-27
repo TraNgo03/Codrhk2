@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Image Preview Demo</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      padding: 24px;
+      background: #f7f7f8;
+      color: #111;
+    }
+
+    .gallery {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .thumb {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      border: 2px solid transparent;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+
+    .thumb:hover {
+      transform: translateY(-4px);
+      border-color: #2b8aef;
+    }
+
+    #image {
+      width: 100%;
+      max-width: 720px;
+      height: 360px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(15,15,20,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      padding: 12px;
+      text-align: center;
+      background-color: #222; /* visible fallback when no background-image */
+    }
+
+    /* make the overlay text slightly shadowed for readability */
+    #image .caption {
+      background: rgba(0,0,0,0.35);
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+
+    .instructions { margin-top: 12px; color: #555; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Preview gallery — hover để xem</h1>
+
+  <div class="gallery">
+    <!-- Sử dụng onmouseover để gọi upDate(this) và onmouseout để gọi undo() -->
+    <!-- Thay src bằng ảnh của bạn nếu muốn -->
+    <img class="thumb" src="https://picsum.photos/id/1015/600/400" alt="Cảnh núi hoang sơ" onmouseover="upDate(this)" onmouseout="undo()">
+    <img class="thumb" src="https://picsum.photos/id/1025/600/400" alt="Chú chó dễ thương" onmouseover="upDate(this)" onmouseout="undo()">
+    <img class="thumb" src="https://picsum.photos/id/1039/600/400" alt="Biển xanh mát" onmouseover="upDate(this)" onmouseout="undo()">
+    <img class="thumb" src="https://picsum.photos/id/1043/600/400" alt="Cánh đồng hoa" onmouseover="upDate(this)" onmouseout="undo()">
+    <img class="thumb" src="https://picsum.photos/id/1052/600/400" alt="Thành phố về đêm" onmouseover="upDate(this)" onmouseout="undo()">
+  </div>
+
+  <!-- Đây là phần sẽ được thay đổi -->
+  <div id="image">
+    <div class="caption">Hover over an image below to display here.</div>
+  </div>
+
+  <div class="instructions">
+    <p>Mẹo debug: mở Developer Console (F12) để xem các <code>console.log()</code> khi hover.</p>
+  </div>
+
+  <script>
+    // Lưu text gốc để undo chính xác
+    const IMAGE_DIV_ID = 'image';
+    const DEFAULT_TEXT = "Hover over an image below to display here.";
+
+    /**
+     * Gọi khi rê chuột vào ảnh: upDate(this)
+     * previewPic là element <img> được truyền từ onmouseover
+     */
+    function upDate(previewPic) {
+      console.log('upDate triggered'); // kiểm tra event firing
+      if (!previewPic) {
+        console.warn('upDate: previewPic is falsy');
+        return;
+      }
+
+      // In chi tiết để debug
+      console.log('previewPic element:', previewPic);
+      console.log('previewPic.src =', previewPic.src);
+      console.log('previewPic.alt =', previewPic.alt);
+
+      // Thay text
+      const imageDiv = document.getElementById(IMAGE_DIV_ID);
+      if (!imageDiv) {
+        console.error(`Element with id="${IMAGE_DIV_ID}" không tìm thấy.`);
+        return;
+      }
+
+      // Đặt text (bên trong .caption nếu muốn giữ style)
+      const caption = imageDiv.querySelector('.caption');
+      if (caption) {
+        caption.textContent = previewPic.alt;
+      } else {
+        imageDiv.textContent = previewPic.alt;
+      }
+
+      // Thay background-image. Sử dụng url('...') đúng cú pháp CSS
+      imageDiv.style.backgroundImage = `url('${previewPic.src}')`;
+    }
+
+    /**
+     * Trả về trạng thái ban đầu khi mouseout
+     */
+    function undo() {
+      console.log('undo triggered');
+      const imageDiv = document.getElementById(IMAGE_DIV_ID);
+      if (!imageDiv) {
+        console.error(`Element with id="${IMAGE_DIV_ID}" không tìm thấy.`);
+        return;
+      }
+      // Xoá background-image (về chuỗi rỗng)
+      imageDiv.style.backgroundImage = ""; // => background-image: url('') tương đương
+
+      // Khôi phục text gốc
+      const caption = imageDiv.querySelector('.caption');
+      if (caption) {
+        caption.textContent = DEFAULT_TEXT;
+      } else {
+        imageDiv.textContent = DEFAULT_TEXT;
+      }
+    }
+
+    // Tùy chọn: nếu muốn gán sự kiện bằng JS thay vì inline attributes:
+    // document.querySelectorAll('.thumb').forEach(img => {
+    //   img.addEventListener('mouseover', () => upDate(img));
+    //   img.addEventListener('mouseout', undo);
+    // });
+  </script>
+</body>
+</html>

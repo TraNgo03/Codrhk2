@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Trang mẫu - Portfolio</title>
+  <meta name="description" content="Mẫu trang web responsive cho bài tập: Home, About, Contact (landing)">
+  <style>
+    /* ==========================
+       styles/stylesheet (embedded)
+       ========================== */
+    :root{
+      --max-width:1100px;
+      --gap:1rem;
+      --accent:#0b74de;
+      --bg:#ffffff;
+      --muted:#666;
+      --radius:8px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#111;background:var(--bg)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
+
+    /* Layout */
+    .site{max-width:var(--max-width);margin:0 auto;padding:1rem}
+    header{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid #eee}
+    .brand{display:flex;align-items:center;gap:.75rem}
+    .logo{width:44px;height:44px;border-radius:8px;background:#eee;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+    nav{display:flex;gap:1rem;align-items:center}
+    .menu-toggle{display:none;background:transparent;border:1px solid #ccc;padding:.45rem .6rem;border-radius:6px}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);align-items:center;padding:2rem 0}
+    .hero .media{min-height:260px;background:#f3f3f3;border-radius:var(--radius);display:flex;align-items:center;justify-content:center}
+    .hero h1{margin:0 0 .5rem;font-size:1.5rem}
+    .hero p{margin:0 0 1rem;color:var(--muted)}
+    .btn{display:inline-block;padding:.6rem 1rem;border-radius:6px;background:var(--accent);color:#fff}
+
+    /* Grid of cards */
+    .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin:2rem 0}
+    .card{padding:1rem;border:1px solid #eee;border-radius:8px;background:#fff}
+    .card h3{margin:0 0 .5rem}
+    .card p{margin:0;color:var(--muted)}
+
+    /* About & Contact */
+    .two-col{display:grid;grid-template-columns:200px 1fr;gap:var(--gap);align-items:start}
+    .contact-form{padding:1rem;border:1px solid #eee;border-radius:8px}
+    label{display:block;margin:.6rem 0 .25rem;font-size:.9rem}
+    input[type="text"],input[type="email"],textarea{width:100%;padding:.6rem;border:1px solid #ddd;border-radius:6px}
+    button[type="submit"]{margin-top:.75rem;padding:.6rem 1rem;border-radius:6px;border:0;background:var(--accent);color:#fff}
+
+    footer{padding:2rem 0;text-align:center;color:var(--muted);border-top:1px solid #f2f2f2;margin-top:2rem}
+
+    /* Utilities */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .card-grid{grid-template-columns:repeat(2,1fr)}
+      .two-col{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      header{padding:.5rem 0}
+      nav{display:none}
+      .menu-toggle{display:inline-block}
+      .card-grid{grid-template-columns:1fr}
+    }
+
+    /* small touches for focus */
+    :focus{outline:3px solid rgba(11,116,222,.15);outline-offset:3px}
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">PT</div>
+        <div>
+          <div style="font-weight:600">Portfolio</div>
+          <div style="font-size:.85rem;color:#666">Ngô Thị Phương Trà</div>
+        </div>
+      </div>
+
+      <nav id="site-nav" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <!-- Hamburger / menu toggle (Feature 1) -->
+      <button class="menu-toggle" id="menu-toggle" aria-controls="site-nav" aria-expanded="false">Menu</button>
+    </header>
+
+    <!-- Hero / Home -->
+    <main>
+      <section id="home" class="hero" aria-labelledby="home-heading">
+        <div class="copy">
+          <h1 id="home-heading">Xin chào — Tôi là Phương Trà</h1>
+          <p>Tôi thiết kế giao diện web responsive, thân thiện với người dùng và tuân thủ tiêu chuẩn.</p>
+          <p><a class="btn" href="#contact">Liên hệ</a></p>
+        </div>
+        <div class="media" role="img" aria-label="Ảnh minh họa"> 
+          <!-- lazy-loading image (Feature 4) -->
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450'><rect width='100%' height='100%' fill='%23EFEFEF'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='24'>Hero Image Placeholder</text></svg>" loading="lazy" alt="Hình minh họa trang chủ">
+        </div>
+      </section>
+
+      <!-- Card grid demonstrating CSS Grid (Feature 3) -->
+      <section aria-label="Projects">
+        <h2 style="margin:1.5rem 0 .5rem">Dự án mẫu</h2>
+        <div class="card-grid">
+          <article class="card" aria-labelledby="p1-title">
+            <h3 id="p1-title">Dự án A</h3>
+            <p>Mô tả ngắn về Dự án A — sử dụng Grid và flexbox để layout.</p>
+          </article>
+          <article class="card" aria-labelledby="p2-title">
+            <h3 id="p2-title">Dự án B</h3>
+            <p>Mô tả ngắn về Dự án B — demo responsive và accessible form.</p>
+          </article>
+          <article class="card" aria-labelledby="p3-title">
+            <h3 id="p3-title">Dự án C</h3>
+            <p>Mô tả ngắn về Dự án C — tối ưu cho mobile-first.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- About page (two-column on desktop) -->
+      <section id="about" style="margin-top:1rem">
+        <h2>About</h2>
+        <div class="two-col">
+          <div>
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><rect width='100%' height='100%' fill='%23EFEFEF'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='16'>Avatar</text></svg>" alt="Ảnh đại diện" loading="lazy">
+          </div>
+          <div>
+            <p>Tôi là một nhà thiết kế web đam mê tạo ra trải nghiệm người dùng rõ ràng và dễ dùng. Tôi chú trọng tới tính khả dụng, tốc độ tải và tương thích trên nhiều thiết bị.</p>
+            <p>Phương pháp làm việc: wireframe → prototype → code sạch, semantic và chuẩn W3C.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact landing page (distinct layout) -->
+      <section id="contact" style="margin-top:1.5rem">
+        <h2>Contact (Landing)</h2>
+        <div class="contact-form" role="form" aria-labelledby="contact-heading">
+          <h3 id="contact-heading" class="sr-only">Form liên hệ</h3>
+          <!-- Accessible contact form (Feature 2) -->
+          <form id="contact-form" action="#" method="post" novalidate>
+            <label for="name">Tên</label>
+            <input type="text" id="name" name="name" required minlength="2" aria-required="true">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required aria-required="true">
+
+            <label for="message">Nội dung</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+
+            <button type="submit">Gửi</button>
+            <div id="form-status" role="status" aria-live="polite" style="margin-top:.5rem;color:var(--muted)"></div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <small>© 2025 Ngô Thị Phương Trà — Demo responsive &amp; accessible</small>
+    </footer>
+  </div>
+
+  <script>
+    // Menu toggle (Feature 1)
+    (function(){
+      const btn = document.getElementById('menu-toggle');
+      const nav = document.getElementById('site-nav');
+      btn.addEventListener('click', ()=>{
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        // simple show/hide for demo (progressive enhancement)
+        if(!expanded){
+          nav.style.display = 'flex';
+          nav.style.flexDirection = 'column';
+          nav.style.position = 'absolute';
+          nav.style.right = '1rem';
+          nav.style.top = '64px';
+          nav.style.background = '#fff';
+          nav.style.border = '1px solid #eee';
+          nav.style.padding = '0.5rem';
+          nav.style.borderRadius = '8px';
+        } else {
+          nav.style.display = '';
+          nav.style.position = '';
+        }
+      });
+    })();
+
+    // Simple client-side validation for contact form (Feature 2)
+    (function(){
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // HTML5 constraint validation API
+        if(!form.checkValidity()){
+          status.textContent = 'Vui lòng hoàn thành các trường yêu cầu.';
+          form.querySelector(':invalid').focus();
+          return;
+        }
+        // Fake submit for demo
+        status.textContent = 'Đã gửi — cảm ơn! (Demo)';
+        form.reset();
+      });
+    })();
+  </script>
+</body>
+</html>
